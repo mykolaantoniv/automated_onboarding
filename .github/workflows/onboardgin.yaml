@@ -20,7 +20,20 @@ jobs:
       - name: Protect Main Branch
         run: |
           gh api "repos/mykolaantoniv/${{ github.event.inputs.project_name }}/branches/main/protection" \
-          --method PUT \
-          --input branchProtection.json
+            --method PUT \
+            --input '{
+              "allow_deletions": false,
+              "allow_force_pushes": false,
+              "allow_fork_syncing": false,
+              "block_creations": false,
+              "enforce_admins": false,
+              "lock_branch": false,
+              "required_conversation_resolution": false,
+              "required_linear_history": false,
+              "required_signatures": false,
+              "required_status_checks": null,
+              "required_pull_request_reviews": null,
+              "restrictions": null
+            }'
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
