@@ -20,8 +20,7 @@ jobs:
       - name: Set Secrets
         run: |
           while IFS='=' read -r secret_name value; do
-            gh secret set "$secret_name" -b "$value" --repository "${{ github.event.inputs.project_name }}"
-          done < secrets.txt
+            gh secret set MYSECRET --body "${{ vars.TEMPLATE_REPO }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
 
