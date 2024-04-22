@@ -11,16 +11,17 @@ jobs:
   create_project_repository:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate Input and Check Repository Existence
-        run: |
-          PROJECT_NAME="${{ github.event.inputs.project_name }}"
-          gh repo view $PROJECT_NAME
-          if [ $? -eq 0 ]; then
-            echo "Repository already exists."
-            exit 1
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    - name: Validate Input and Check Repository Existence
+      run: |
+        PROJECT_NAME="${{ github.event.inputs.project_name }}"
+        gh repo view $PROJECT_NAME > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+          echo "Repository already exists."
+          exit 1
+        fi
+  env:
+    GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  continue-on-error: true
 
       - name: Create Repository from Template
         if: ${{ success() }}
