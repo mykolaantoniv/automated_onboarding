@@ -19,23 +19,24 @@ jobs:
 
       - name: Protect Main Branch
         run: |
-          # Get the repository ID of the "cli/cli" repository
-          repositoryId="$(gh api graphql -f query='{repository(owner:"cli",name:"cli"){id}}' -q .data.repository.id)"
+          # Get the repository owner and name
+          OWNER=$(echo "${{ github.repository }}" | cut -d '/' -f 1)
+          REPO=$(echo "${{ github.repository }}" | cut -d '/' -f 2)
           
-          # Create a branch protection rule
-          gh api graphql -f query='
-            mutation($repositoryId: ID!, $branch: String!, $requiredReviews: Int!) {
-              createBranchProtectionRule(input: {
-                repositoryId: $repositoryId
-                pattern: $branch
-                requiresApprovingReviews: true
-                requiredApprovingReviewCount: $requiredReviews
-              }) {
-                clientMutationId
-              }
-            }' \
-            -f repositoryId="$repositoryId" \
-            -f branch="main" \
-            -f requiredReviews=3
+          # Create branch protection rule using GitHub API
+          gh api repos/$OWNER/$REPO/branches/main/protection \
+            -X PUT \
+            -H "Accept: application/vnd.github.luke-cage-preview+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{
+              "required_status_checks": null,
+              "enforce_admins": true,
+              "required_pull_request_reviews": {
+                "dismiss_stale_reviews": true,
+                "require_code_owner_reviews": true
+              },
+              "restrictions": null
+            }'
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
