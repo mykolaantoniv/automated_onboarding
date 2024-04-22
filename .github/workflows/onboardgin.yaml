@@ -13,15 +13,16 @@ jobs:
     steps:
       - name: Create Repository from Template
         run: |
-          gh repo create "${{ github.event.inputs.project_name }}" --template="${{ secrets.TEMPLATE_REPO }}" --private --include-all-branches
+          gh repo create "${{ github.event.inputs.project_name }}" --template="${{ vars.TEMPLATE_REPO }}" --private --include-all-branches
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - name: Protect Main Branch
+      - name: Set Secrets
         run: |
-          owner=$(gh api user | jq -r .login)
-          gh api "repos/$owner/${{ github.event.inputs.project_name }}/branches/main/protection" \
-            --method PUT \
-            --input config/branchProtection.json
+          while IFS='=' read -r secret_name value; do
+            gh secret set "$secret_name" -b "$value" --repository "${{ github.event.inputs.project_name }}"
+          done < config/secrets.txt
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+
+
