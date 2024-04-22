@@ -16,6 +16,6 @@ jobs:
         run: |
           PROJECT_NAME="${{ github.event.inputs.project_name }}"
           TEMPLATE_REPO="${{ secrets.TEMPLATE_REPO }}"
-          gh repo create "$PROJECT_NAME" --template $TEMPLATE_REPO --private --clone
+          gh repo create "$PROJECT_NAME" --template $TEMPLATE_REPO --private
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
