@@ -19,8 +19,8 @@ jobs:
 
       - name: Protect Main Branch
         run: |
-          gh api "repos/mykolaantoniv/${{ github.event.inputs.project_name }}/branches/main/protection" --method PUT --input branchProtection.json
+          gh api "repos/mykolaantoniv/${{ github.event.inputs.project_name }}/branches/main/protection" \
+          --method PUT \
+          --input branchProtection.json
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
-
