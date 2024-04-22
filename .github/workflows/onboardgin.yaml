@@ -13,6 +13,6 @@ jobs:
     steps:
       - name: Create Repository from Template
         run: |
-          gh repo create "${{ github.event.inputs.project_name }}" --template="mykolaantoniv/reusable_repository" --include-all-branches --private
+          gh repo create "${{ github.event.inputs.project_name }}" --template="${{ vars.TEMPLATE_REPO }}" --include-all-branches --private
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
