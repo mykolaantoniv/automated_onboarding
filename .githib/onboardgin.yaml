@@ -1,0 +1,31 @@
+name: Create Project Repository
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_name:
+        description: 'Name of the new project repository'
+        required: true
+
+jobs:
+  create_project_repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Input and Check Repository Existence
+        run: |
+          PROJECT_NAME="${{ github.event.inputs.project_name }}"
+          gh repo view $PROJECT_NAME
+          if [ $? -eq 0 ]; then
+            echo "Repository already exists."
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Create Repository from Template
+        if: ${{ success() }}
+        run: |
+          PROJECT_NAME="${{ github.event.inputs.project_name }}"
+          gh repo create $PROJECT_NAME --template $TEMPLATE_REPO --private --confirm
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
