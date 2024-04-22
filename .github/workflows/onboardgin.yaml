@@ -19,7 +19,7 @@ jobs:
 
       - name: Set Secrets
         run: |
-          gh secret set MYSECRET --body "${{ vars.TEMPLATE_REPO }}" --repository "${{ github.event.inputs.project_name }}"
+          gh secret set MYSECRET --body "${{ vars.TEMPLATE_REPO }}" --repo "${{ github.event.inputs.project_name }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
 
