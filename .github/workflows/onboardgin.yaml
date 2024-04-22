@@ -21,7 +21,7 @@ jobs:
         run: |
           while IFS='=' read -r secret_name value; do
             gh secret set "$secret_name" -b "$value" --repository "${{ github.event.inputs.project_name }}"
-          done < config/secrets.txt
+          done < config\secrets.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
 
