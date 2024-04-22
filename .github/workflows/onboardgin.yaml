@@ -11,15 +11,15 @@ jobs:
   create_project_repository:
     runs-on: ubuntu-latest
     steps:
-      - name: Create Repository from Template
-        run: |
-          gh repo create "${{ github.event.inputs.project_name }}" --template="${{ vars.TEMPLATE_REPO }}" --private --include-all-branches
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      # - name: Create Repository from Template
+      #   run: |
+      #     gh repo create "${{ github.event.inputs.project_name }}" --template="${{ vars.TEMPLATE_REPO }}" --private --include-all-branches
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Set Secrets
         run: |
-          gh secret set --org mykolaantoniv MYSECRET --body "${{ vars.TEMPLATE_REPO }}" --repos ${{ github.event.inputs.project_name }}
+          gh secret set name --body value --repo mykolaantoniv/nwd
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
 
