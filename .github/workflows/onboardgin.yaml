@@ -28,15 +28,12 @@ jobs:
             -X PUT \
             -H "Accept: application/vnd.github.luke-cage-preview+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -d '{
-              "required_status_checks": null,
-              "enforce_admins": true,
-              "required_pull_request_reviews": {
-                "dismiss_stale_reviews": true,
-                "require_code_owner_reviews": true
-              },
-              "restrictions": null
-            }'
+            -f required_status_checks=null \
+            -f enforce_admins=true \
+            -f required_pull_request_reviews.dismiss_stale_reviews=true \
+            -f required_pull_request_reviews.require_code_owner_reviews=true \
+            -f restrictions=null
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
