@@ -1,20 +1,92 @@
-name: Create Project Repository
+name: Manual Workflow Dispatch
 
 on:
   workflow_dispatch:
     inputs:
-      project_name:
-        description: 'Name of the new project repository'
+      # Essential Parameters
+      branch:
+        description: 'The branch to deploy from'
         required: true
+        default: 'main'
+      environment:
+        description: 'Select the deployment environment'
+        required: true
+        default: 'Development'
+        type: choice
+        options:
+          - Development
+          - Staging
+          - Production
+      repository_name:
+        description: 'The name of the GitHub repository'
+        required: true
+        default: 'my-repo'
+
+      # Team Configuration
+      existing_team:
+        description: 'Select an existing team'
+        required: false
+        type: choice
+        options:
+          - Team A
+          - Team B
+          - Team C
+      new_team:
+        description: 'Provide a name for the new team'
+        required: false
+
+      # Azure Services Configuration
+      database_choice:
+        description: 'Choose the database service'
+        required: true
+        type: choice
+        options:
+          - Azure SQL
+          - PostgreSQL
+          - Both
+      data_service:
+        description: 'Select the data service'
+        required: true
+        type: choice
+        options:
+          - Synapse
+          - Databricks
+          - Both
+      enable_monitoring:
+        description: 'Enable Application Insights and Log Analytics Workspace'
+        required: false
+        type: boolean
+        default: false
+
+      # Additional Configuration
+      save_secret:
+        description: 'Save the secret to GitHub Secrets'
+        required: false
+        type: boolean
+        default: false
+      github_admin:
+        description: 'GitHub admin username'
+        required: false
 
 jobs:
-  create_project_repository:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-       - name: Create Repository from Template
-         run: |
-           gh repo create "${{ github.event.inputs.project_name }}" --template="${{ vars.TEMPLATE_REPO }}" --private --include-all-branches
-         env:
-           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v2
 
+      - name: Display Input Parameters
+        run: |
+          echo "Branch: ${{ github.event.inputs.branch }}"
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Repository Name: ${{ github.event.inputs.repository_name }}"
+          echo "Existing Team: ${{ github.event.inputs.existing_team }}"
+          echo "New Team: ${{ github.event.inputs.new_team }}"
+          echo "Database Choice: ${{ github.event.inputs.database_choice }}"
+          echo "Data Service: ${{ github.event.inputs.data_service }}"
+          echo "Enable Monitoring: ${{ github.event.inputs.enable_monitoring }}"
+          echo "Save Secret: ${{ github.event.inputs.save_secret }}"
+          echo "GitHub Admin: ${{ github.event.inputs.github_admin }}"
 
+      # Add your additional deployment steps here
