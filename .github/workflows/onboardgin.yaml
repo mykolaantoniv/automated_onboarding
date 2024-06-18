@@ -14,16 +14,16 @@ on:
           - Staging
           - Production
       repository_name:
-        description: 'The name of the Project repository'
+        description: 'Project repository name'
         required: false
         default: ''
       github_admin:
-        description: 'GitHub Project repository admin'
+        description: 'GitHub project repository admin'
         required: false
 
       # Team Configuration
       existing_team:
-        description: 'Existing team from the list, or leave empty if creating a new team'
+        description: 'Existing team (or leave empty to create new)'
         required: false
         default: ''
         type: choice
@@ -33,12 +33,12 @@ on:
           - Team B
           - Team C
       new_team:
-        description: 'Provide a name for the new team'
+        description: 'New team name'
         required: false
 
       # Azure Services Configuration
       database_choice:
-        description: 'Choose the Database service'
+        description: 'Choose the database service'
         required: true
         type: choice
         options:
@@ -46,7 +46,7 @@ on:
           - PostgreSQL
           - Azure SQL & PostgreSQL
       data_service:
-        description: 'Select the Data service'
+        description: 'Select the data service'
         required: true
         type: choice
         options:
@@ -61,7 +61,7 @@ on:
 
       # Additional Configuration
       save_secret:
-        description: 'Save the Aurora SPN secret to the Azure Key Vault'
+        description: 'Save Aurora SPN secret to Azure Key Vault'
         required: false
         type: boolean
         default: false
