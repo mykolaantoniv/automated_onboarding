@@ -5,7 +5,7 @@ on:
     inputs:
       # Essential Parameters
       environment:
-        description: 'Select the deployment environment'
+        description: 'Select the environment'
         required: true
         default: 'Development'
         type: choice
@@ -18,12 +18,12 @@ on:
         required: false
         default: ''
       github_admin:
-        description: 'GitHub admin username'
+        description: 'GitHub Project repository admin'
         required: false
 
       # Team Configuration
       existing_team:
-        description: 'Select an existing team from the list, or leave empty if creating a new team'
+        description: 'Existing team from the list, or leave empty if creating a new team'
         required: false
         default: ''
         type: choice
@@ -33,35 +33,35 @@ on:
           - Team B
           - Team C
       new_team:
-        description: 'Provide a name for the new team if it does not already exist in the list above'
+        description: 'Provide a name for the new team'
         required: false
 
       # Azure Services Configuration
       database_choice:
-        description: 'Choose the database service'
+        description: 'Choose the Database service'
         required: true
         type: choice
         options:
           - Azure SQL
           - PostgreSQL
-          - Both
+          - Azure SQL & PostgreSQL
       data_service:
-        description: 'Select the data service'
+        description: 'Select the Data service'
         required: true
         type: choice
         options:
-          - Synapse
           - Databricks
-          - Both
+          - Synapse
+          - Databricks & Synapse
       enable_monitoring:
-        description: 'Enable Application Insights and Log Analytics Workspace'
+        description: 'Enable Application Insights'
         required: false
         type: boolean
         default: false
 
       # Additional Configuration
       save_secret:
-        description: 'Save the secret to GitHub Secrets'
+        description: 'Save the Aurora SPN secret to the Azure Key Vault'
         required: false
         type: boolean
         default: false
