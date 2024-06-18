@@ -14,16 +14,13 @@ on:
           - Staging
           - Production
       repository_name:
-        description: 'The name of the GitHub repository'
+        description: 'The name of the Project repository'
         required: false
         default: 'my-repo'
-      github_admin:
-        description: 'GitHub admin username'
-        required: false
 
       # Team Configuration
       existing_team:
-        description: 'Select an existing team'
+        description: 'Select an existing team from the list, or leave empty if creating a new team'
         required: false
         type: choice
         options:
@@ -31,7 +28,7 @@ on:
           - Team B
           - Team C
       new_team:
-        description: 'Provide a name for the new team'
+        description: 'Provide a name for the new team if it does not already exist in the list above'
         required: false
 
       # Azure Services Configuration
@@ -63,14 +60,9 @@ on:
         required: false
         type: boolean
         default: false
-
-     # Test Parameter
-      test_parameter:
-        description: 'One more test parameter'
+      github_admin:
+        description: 'GitHub admin username'
         required: false
-        type: boolean
-        default: false
-
 
 jobs:
   deploy:
