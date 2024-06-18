@@ -4,10 +4,6 @@ on:
   workflow_dispatch:
     inputs:
       # Essential Parameters
-      branch:
-        description: 'The branch to deploy from'
-        required: true
-        default: 'main'
       environment:
         description: 'Select the deployment environment'
         required: true
@@ -19,7 +15,7 @@ on:
           - Production
       repository_name:
         description: 'The name of the GitHub repository'
-        required: true
+        required: false
         default: 'my-repo'
       github_admin:
         description: 'GitHub admin username'
