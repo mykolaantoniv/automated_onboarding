@@ -28,6 +28,7 @@ on:
         default: ''
         type: choice
         options:
+          - '' 
           - Team A
           - Team B
           - Team C
