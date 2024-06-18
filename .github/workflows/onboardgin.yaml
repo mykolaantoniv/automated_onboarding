@@ -68,8 +68,8 @@ on:
         type: boolean
         default: false
 
-    # Test Parameter
-      save_secret:
+     # Test Parameter
+      test_parameter:
         description: 'One more test parameter'
         required: false
         type: boolean
