@@ -21,6 +21,9 @@ on:
         description: 'The name of the GitHub repository'
         required: true
         default: 'my-repo'
+      github_admin:
+        description: 'GitHub admin username'
+        required: false
 
       # Team Configuration
       existing_team:
@@ -64,9 +67,14 @@ on:
         required: false
         type: boolean
         default: false
-      github_admin:
-        description: 'GitHub admin username'
+
+    # Test Parameter
+      save_secret:
+        description: 'One more test parameter'
         required: false
+        type: boolean
+        default: false
+
 
 jobs:
   deploy:
