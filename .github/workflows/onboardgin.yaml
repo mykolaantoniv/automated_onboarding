@@ -16,7 +16,7 @@ on:
       repository_name:
         description: 'The name of the Project repository'
         required: false
-        default: 'my-repo'
+        default: ''
       github_admin:
         description: 'GitHub admin username'
         required: false
@@ -25,6 +25,7 @@ on:
       existing_team:
         description: 'Select an existing team from the list, or leave empty if creating a new team'
         required: false
+        default: ''
         type: choice
         options:
           - Team A
